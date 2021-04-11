@@ -1,5 +1,7 @@
 const Bar = require("./bar");
-const SelectionSort = require("./algorithms/selection");
+const selectionSort = require("./algorithms/selection");
+const bubbleSort = require("./algorithms/bubble");
+const insertionSort = require("./algorithms/insertion");
 
 function Board(width, height, totalBars, minHeight) {
   this.width = width;
@@ -46,6 +48,9 @@ Board.prototype.randomize = function() {
   for (let c = 0; c < this.totalBars; c++) {
     let newBarId = `${c}`;
     this.bars[`${newBarId}`].height = heights[c];
+
+    let element = document.getElementById(newBarId);
+    element.className = 'bar not_active';
   }
   this.draw();
 };
@@ -70,8 +75,16 @@ Board.prototype.toggleButtons = function() {
     this.randomize();
   }
 
-  document.getElementById("startButton").onclick = () => {
-    SelectionSort(this, finishSorting);
+  document.getElementById("selectionSortButton").onclick = () => {
+    selectionSort(this, finishSorting);
+  }
+
+  document.getElementById("bubbleSortButton").onclick = () => {
+    bubbleSort(this, finishSorting);
+  }
+
+  document.getElementById("insertionSortButton").onclick = () => {
+    insertionSort(this, finishSorting);
   }
 };
 

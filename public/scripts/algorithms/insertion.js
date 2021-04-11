@@ -8,30 +8,22 @@ const STATE = {
 };
 Object.freeze(STATE)
 
-async function selectionSort(board, callback) {
+async function insertionSort(board, callback) {
   let bars = board.boardBars;
-  for(let i = 0; i<bars.length; i++) {
-    let smallestBar = bars[i];
+  for(let i = 1; i<bars.length; i++) {
+    let currentBar = bars[i];
+    let j = i - 1;
     drawBarByState(bars[i], STATE.ACTIVE);
-    for(let j = i+1; j<bars.length; j++) {
+    await sleep(board.speed);
+    while(j >= 0 && bars[j].height > currentBar.height) {
       drawBarByState(bars[j], STATE.CURRENT);
+      swapHeight(bars[j], currentBar, board.height);
+      currentBar = bars[j];
       await sleep(board.speed);
-      if(smallestBar.height > bars[j].height) {
-        if(smallestBar.id != bars[i].id) {
-          drawBarByState(smallestBar, STATE.NOT_ACTIVE);
-        }
-        smallestBar = bars[j];
-        drawBarByState(smallestBar, STATE.COMPARED);
-      } else {
-        drawBarByState(bars[j], STATE.NOT_ACTIVE);
-      }
-      await sleep(board.speed);
+      drawBarByState(bars[j], STATE.NOT_ACTIVE);
+      j -= 1;
     }
-    if(smallestBar.id != bars[i].id) {
-      swapHeight(smallestBar, bars[i], board.height);
-      drawBarByState(smallestBar, STATE.NOT_ACTIVE);
-    }
-    drawBarByState(bars[i], STATE.NOT_ACTIVE);
+    drawBarByState(currentBar, STATE.NOT_ACTIVE);
     await sleep(board.speed);
   }
   callback(board);
@@ -53,4 +45,4 @@ function drawBarByState(bar, state) {
   element.className = `bar ${state}`;
 };
 
-module.exports = selectionSort;
+module.exports = insertionSort;
