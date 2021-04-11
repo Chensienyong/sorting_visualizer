@@ -1,28 +1,31 @@
 const Bar = require("./bar");
+const SelectionSort = require("./algorithms/selection");
 
-function Board(width, height, totalBars) {
+function Board(width, height, totalBars, minHeight) {
   this.width = width;
   this.height = height;
   this.boardBars = [];
   this.bars = {};
   this.speed = "fast";
   this.totalBars = totalBars;
+  this.minHeight = minHeight;
 }
 
 Board.prototype.init = function() {
   this.createBoard();
   this.draw();
+  this.toggleButtons();
 };
 
 Board.prototype.createBoard = function() {
   let tableHTML = `<div class="row">`;
-  let heights = heightArray(5, this.height, this.totalBars);
+  let heights = heightArray(this.minHeight, this.height, this.totalBars);
   for (let c = 0; c < this.totalBars; c++) {
     let newBarId = `${c}`;
     let newBar = new Bar(newBarId, heights[c]);
     this.boardBars.push(newBar);
     this.bars[`${newBarId}`] = newBar;
-    tableHTML += `<div id="${newBarId}" class="bar"></div>`;
+    tableHTML += `<div id="${newBarId}" class="bar not_active"></div>`;
   }
   tableHTML += `</div>`;
   let board = document.getElementById("array");
@@ -36,6 +39,63 @@ Board.prototype.draw = function() {
     $(`#${bar.id}`).css("height", bar.height);
     $(`#${bar.id}`).css("margin-top", this.height - bar.height);
   }
+};
+
+Board.prototype.randomize = function() {
+  let heights = heightArray(this.minHeight, this.height, this.totalBars);
+  for (let c = 0; c < this.totalBars; c++) {
+    let newBarId = `${c}`;
+    this.bars[`${newBarId}`].height = heights[c];
+  }
+  this.draw();
+};
+
+Board.prototype.toggleButtons = function() {
+  document.getElementById("adjustFast").onclick = () => {
+    this.speed = "fast";
+    document.getElementById("adjustSpeed").innerHTML = 'Speed: Fast<span class="caret"></span>';
+  }
+
+  document.getElementById("adjustAverage").onclick = () => {
+    this.speed = "average";
+    document.getElementById("adjustSpeed").innerHTML = 'Speed: Average<span class="caret"></span>';
+  }
+
+  document.getElementById("adjustSlow").onclick = () => {
+    this.speed = "slow";
+    document.getElementById("adjustSpeed").innerHTML = 'Speed: Slow<span class="caret"></span>';
+  }
+
+  document.getElementById("randomizeButton").onclick = () => {
+    this.randomize();
+  }
+
+  document.getElementById("startButton").onclick = () => {
+    SelectionSort(this, finishSorting);
+  }
+};
+
+function finishSorting(board) {
+  let listBars = [];
+  for(let i = board.boardBars.length-1; i >= 0; i--) {
+    listBars.push(board.boardBars[i].id);
+  }
+
+  function generation() {
+    if(listBars.length == 0) return;
+    let speed = board.speed === "fast" ?
+      15 : board.speed === "average" ?
+        25 : 50;
+
+    setTimeout(function () {
+      let element = document.getElementById(listBars.pop());
+      element.className = 'bar sorted';
+
+      generation();
+    }, speed);
+  }
+
+  generation();
 };
 
 function heightArray(minHeight, maxHeight, size) {
@@ -69,8 +129,9 @@ function shuffle(array) {
   return array;
 }
 
-let totalBars = 50;
+let minHeight = 5;
+let totalBars = Math.min(50, $("#array").width() / 7);
 let width = ($("#array").width() / totalBars) - 4;
 let height = $("#array").height();
-let newBoard = new Board(width, height, totalBars);
+let newBoard = new Board(width, height, totalBars, minHeight);
 newBoard.init();

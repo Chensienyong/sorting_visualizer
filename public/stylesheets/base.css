@@ -23,7 +23,7 @@ body {
 #main {
   position: center;
   width: 90vw;
-  height: 80vh;
+  height: 70vh;
   margin: auto;
   margin-top: 20px;
 }
@@ -67,6 +67,27 @@ button:disabled {
 }
 
 .bar {
-  background-color: #393e46;
   margin: 2px;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+.not_active {
+  background-color: #393e46;
+}
+
+.sorted {
+  background-color: #00ff00;
+}
+
+.active {
+  background-color: #00adb5;
+}
+
+.compared {
+  background-color: #ff0000;
+}
+
+.current {
+  background-color: #007980;
 }
