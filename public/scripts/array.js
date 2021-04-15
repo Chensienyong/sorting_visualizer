@@ -2,6 +2,7 @@ const Bar = require("./bar");
 const selectionSort = require("./algorithms/selection");
 const bubbleSort = require("./algorithms/bubble");
 const insertionSort = require("./algorithms/insertion");
+const mergeSort = require("./algorithms/merge");
 
 function Board(width, height, totalBars, minHeight) {
   this.width = width;
@@ -85,6 +86,10 @@ Board.prototype.toggleButtons = function() {
 
   document.getElementById("insertionSortButton").onclick = () => {
     insertionSort(this, finishSorting);
+  }
+
+  document.getElementById("mergeSortButton").onclick = () => {
+    mergeSort(this, finishSorting);
   }
 };
 
