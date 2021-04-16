@@ -3,6 +3,7 @@ const selectionSort = require("./algorithms/selection");
 const bubbleSort = require("./algorithms/bubble");
 const insertionSort = require("./algorithms/insertion");
 const mergeSort = require("./algorithms/merge");
+const quickSort = require("./algorithms/quick");
 
 function Board(width, height, totalBars, minHeight) {
   this.width = width;
@@ -91,6 +92,10 @@ Board.prototype.toggleButtons = function() {
   document.getElementById("mergeSortButton").onclick = () => {
     mergeSort(this, finishSorting);
   }
+
+  document.getElementById("quickSortButton").onclick = () => {
+    quickSort(this, finishSorting);
+  }
 };
 
 function finishSorting(board) {
@@ -102,8 +107,8 @@ function finishSorting(board) {
   function generation() {
     if(listBars.length == 0) return;
     let speed = board.speed === "fast" ?
-      15 : board.speed === "average" ?
-        25 : 50;
+      0 : board.speed === "average" ?
+        10 : 20;
 
     setTimeout(function () {
       let element = document.getElementById(listBars.pop());
@@ -148,8 +153,9 @@ function shuffle(array) {
 }
 
 let minHeight = 5;
-let totalBars = Math.min(50, $("#array").width() / 7);
-let width = ($("#array").width() / totalBars) - 4;
+let maxBars = 100; //to make sort not taking too long
+let totalBars = Math.min(maxBars, $("#array").width() / 2); //2 is margin 0.5 both right and left + 1px bar
+let width = ($("#array").width() / totalBars) - 1; //1 is margin 0.5 both right and left
 let height = $("#array").height();
 let newBoard = new Board(width, height, totalBars, minHeight);
 newBoard.init();

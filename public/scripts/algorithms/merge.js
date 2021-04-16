@@ -15,13 +15,11 @@ async function merge(bars, left, mid, right, board) {
   for (let i = 0; i < n1; i++) {
     drawBarByState(bars[left + i], STATE.ACTIVE);
     barsLeft.push(bars[left + i].height);
-    await sleep(board.speed);
     drawBarByState(bars[left + i], STATE.NOT_ACTIVE);
   }
   for (let i = 0; i < n2; i++) {
     drawBarByState(bars[mid + 1 + i], STATE.ACTIVE);
     barsRight.push(bars[mid + 1 + i].height);
-    await sleep(board.speed);
     drawBarByState(bars[mid + 1 + i], STATE.NOT_ACTIVE);
   }
 
@@ -36,13 +34,11 @@ async function merge(bars, left, mid, right, board) {
       setHeight(bars[pointerNow], barsLeft[pointerLeft], board.height);
       drawBarByState(bars[pointerLeft + left], STATE.NOT_ACTIVE);
       drawBarByState(bars[mid + 1 + pointerRight], STATE.NOT_ACTIVE);
-      await sleep(board.speed);
       pointerLeft++;
     } else {
       setHeight(bars[pointerNow], barsRight[pointerRight], board.height);
       drawBarByState(bars[pointerLeft + left], STATE.NOT_ACTIVE);
       drawBarByState(bars[mid + 1 + pointerRight], STATE.NOT_ACTIVE);
-      await sleep(board.speed);
       pointerRight++;
     }
     drawBarByState(bars[pointerNow], STATE.NOT_ACTIVE);
@@ -71,11 +67,8 @@ async function merge(bars, left, mid, right, board) {
 async function mergeMain(bars, left, right, board) {
   if (left >= right) return;
   let mid = Math.floor(left + ((right - left) / 2));
-  await sleep(board.speed);
   await mergeMain(bars, left, mid, board);
-  await sleep(board.speed);
   await mergeMain(bars, mid+1, right, board);
-  await sleep(board.speed);
   await merge(bars, left, mid, right, board);
 }
 

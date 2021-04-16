@@ -25,14 +25,12 @@ async function selectionSort(board, callback) {
       } else {
         drawBarByState(bars[j], STATE.NOT_ACTIVE);
       }
-      await sleep(board.speed);
     }
     if(smallestBar.id != bars[i].id) {
       swapHeight(smallestBar, bars[i], board.height);
       drawBarByState(smallestBar, STATE.NOT_ACTIVE);
     }
     drawBarByState(bars[i], STATE.NOT_ACTIVE);
-    await sleep(board.speed);
   }
   callback(board);
 }

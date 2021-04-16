@@ -67,7 +67,7 @@ button:disabled {
 }
 
 .bar {
-  margin: 2px;
+  margin: 0.5px;
   padding-right: 0px !important;
   padding-left: 0px !important;
 }

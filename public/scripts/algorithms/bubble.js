@@ -22,7 +22,6 @@ async function bubbleSort(board, callback) {
       }
       drawBarByState(bars[j], STATE.NOT_ACTIVE);
       drawBarByState(bars[j+1], STATE.NOT_ACTIVE);
-      await sleep(board.speed);
     }
     if(!swapped) break;
   }

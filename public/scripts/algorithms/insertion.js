@@ -14,7 +14,6 @@ async function insertionSort(board, callback) {
     let currentBar = bars[i];
     let j = i - 1;
     drawBarByState(bars[i], STATE.ACTIVE);
-    await sleep(board.speed);
     while(j >= 0 && bars[j].height > currentBar.height) {
       drawBarByState(bars[j], STATE.CURRENT);
       swapHeight(bars[j], currentBar, board.height);
@@ -24,7 +23,6 @@ async function insertionSort(board, callback) {
       j -= 1;
     }
     drawBarByState(currentBar, STATE.NOT_ACTIVE);
-    await sleep(board.speed);
   }
   callback(board);
 }
