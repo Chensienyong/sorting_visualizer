@@ -17,6 +17,19 @@
           <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="algorithm" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Algorithm: Bubble Sort
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
+                  <li id='bubble'><a class="dropdown-item" href="#">Bubble Sort</a></li>
+                  <li id='heap'><a class="dropdown-item" href="#">Heap Sort</a></li>
+                  <li id='insertion'><a class="dropdown-item" href="#">Insertion Sort</a></li>
+                  <li id='merge'><a class="dropdown-item" href="#">Merge Sort</a></li>
+                  <li id='quick'><a class="dropdown-item" href="#">Quick Sort</a></li>
+                  <li id='selection'><a class="dropdown-item" href="#">Selection Sort</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="adjustSpeed" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Speed: Fast
                 <span class="caret"></span></a>
@@ -35,23 +48,11 @@
       <nav class="navbar navbar-expand-lg navbar-dark navbar-menu">
         <div class="d-grid col-8 mx-auto">
           <div class="row">
-            <div class="col-sm-3 col-xm-6 d-flex justify-content-center button-container">
+            <div class="col-sm-6 col-xm-6 d-flex justify-content-center button-container">
               <button id="randomizeButton" type="button" class="btn btn-light">Randomize</button>
             </div>
-            <div class="col-sm-3 col-xm-6 d-flex justify-content-center button-container">
-              <button id="selectionSortButton" type="button" class="btn btn-light">Selection Sort</button>
-            </div>
-            <div class="col-sm-3 col-xm-6 d-flex justify-content-center button-container">
-              <button id="bubbleSortButton" type="button" class="btn btn-light">Bubble Sort</button>
-            </div>
-            <div class="col-sm-3 col-xm-6 d-flex justify-content-center button-container">
-              <button id="insertionSortButton" type="button" class="btn btn-light">Insertion Sort</button>
-            </div>
-            <div class="col-sm-3 col-xm-6 d-flex justify-content-center button-container">
-              <button id="mergeSortButton" type="button" class="btn btn-light">Merge Sort</button>
-            </div>
-            <div class="col-sm-3 col-xm-6 d-flex justify-content-center button-container">
-              <button id="quickSortButton" type="button" class="btn btn-light">Quick Sort</button>
+            <div class="col-sm-6 col-xm-6 d-flex justify-content-center button-container">
+              <button id="startButton" type="button" class="btn btn-light">Start</button>
             </div>
           </div>
         </div>

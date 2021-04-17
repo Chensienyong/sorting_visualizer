@@ -4,6 +4,7 @@ const bubbleSort = require("./algorithms/bubble");
 const insertionSort = require("./algorithms/insertion");
 const mergeSort = require("./algorithms/merge");
 const quickSort = require("./algorithms/quick");
+const heapSort = require("./algorithms/heap");
 
 function Board(width, height, totalBars, minHeight) {
   this.width = width;
@@ -13,6 +14,7 @@ function Board(width, height, totalBars, minHeight) {
   this.speed = "fast";
   this.totalBars = totalBars;
   this.minHeight = minHeight;
+  this.algorithm = "bubble";
 }
 
 Board.prototype.init = function() {
@@ -50,11 +52,16 @@ Board.prototype.randomize = function() {
   for (let c = 0; c < this.totalBars; c++) {
     let newBarId = `${c}`;
     this.bars[`${newBarId}`].height = heights[c];
+  }
+  this.unactivate();
+  this.draw();
+};
 
-    let element = document.getElementById(newBarId);
+Board.prototype.unactivate = function() {
+  for (let c = 0; c < this.totalBars; c++) {
+    let element = document.getElementById(`${c}`);
     element.className = 'bar not_active';
   }
-  this.draw();
 };
 
 Board.prototype.toggleButtons = function() {
@@ -77,24 +84,62 @@ Board.prototype.toggleButtons = function() {
     this.randomize();
   }
 
-  document.getElementById("selectionSortButton").onclick = () => {
-    selectionSort(this, finishSorting);
+  document.getElementById("bubble").onclick = () => {
+    this.algorithm = "bubble";
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Bubble Sort<span class="caret"></span>';
   }
 
-  document.getElementById("bubbleSortButton").onclick = () => {
-    bubbleSort(this, finishSorting);
+  document.getElementById("heap").onclick = () => {
+    this.algorithm = "heap";
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Heap Sort<span class="caret"></span>';
   }
 
-  document.getElementById("insertionSortButton").onclick = () => {
-    insertionSort(this, finishSorting);
+  document.getElementById("insertion").onclick = () => {
+    this.algorithm = "insertion";
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Insertion Sort<span class="caret"></span>';
   }
 
-  document.getElementById("mergeSortButton").onclick = () => {
-    mergeSort(this, finishSorting);
+  document.getElementById("merge").onclick = () => {
+    this.algorithm = "merge";
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Merge Sort<span class="caret"></span>';
   }
 
-  document.getElementById("quickSortButton").onclick = () => {
-    quickSort(this, finishSorting);
+  document.getElementById("quick").onclick = () => {
+    this.algorithm = "quick";
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Quick Sort<span class="caret"></span>';
+  }
+
+  document.getElementById("selection").onclick = () => {
+    this.algorithm = "selection";
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Selection Sort<span class="caret"></span>';
+  }
+
+  document.getElementById("startButton").onclick = () => {
+    this.unactivate();
+    this.runSorting();
+  }
+};
+
+Board.prototype.runSorting = function() {
+  switch(this.algorithm) {
+    case "bubble":
+      bubbleSort(this, finishSorting);
+      break;
+    case "heap":
+      heapSort(this, finishSorting);
+      break;
+    case "insertion":
+      insertionSort(this, finishSorting);
+      break;
+    case "merge":
+      mergeSort(this, finishSorting);
+      break;
+    case "quick":
+      quickSort(this, finishSorting);
+      break;
+    case "selection":
+      selectionSort(this, finishSorting);
+      break;
   }
 };
 
