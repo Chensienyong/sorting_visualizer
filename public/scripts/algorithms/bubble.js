@@ -13,6 +13,7 @@ async function bubbleSort(board, callback) {
   for(let i = 0; i<bars.length-1; i++) {
     let swapped = false;
     for(let j = 0; j<bars.length-1-i; j++) {
+      if(!board.run) return;
       drawBarByState(bars[j], STATE.ACTIVE);
       drawBarByState(bars[j+1], STATE.COMPARED);
       await sleep(board.speed);

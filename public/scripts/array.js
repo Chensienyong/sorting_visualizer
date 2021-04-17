@@ -15,7 +15,8 @@ function Board(width, height, totalBars, minHeight) {
   this.totalBars = totalBars;
   this.minHeight = minHeight;
   this.algorithm = "bubble";
-}
+  this.run = false;
+};
 
 Board.prototype.init = function() {
   this.createBoard();
@@ -115,8 +116,22 @@ Board.prototype.toggleButtons = function() {
   }
 
   document.getElementById("startButton").onclick = () => {
-    this.unactivate();
-    this.runSorting();
+    if (this.run) {
+      this.run = false;
+
+      document.getElementById("randomizeButton").removeAttribute("disabled", "");
+      document.getElementById("algorithm").className = "nav-link dropdown-toggle";
+      document.getElementById("startButton").innerHTML = "Start";
+    } else {
+      this.run = true;
+
+      document.getElementById("randomizeButton").setAttribute("disabled", "");
+      document.getElementById("algorithm").className = "nav-link dropdown-toggle disabled";
+      document.getElementById("startButton").innerHTML = "Stop";
+
+      this.unactivate();
+      this.runSorting();
+    }
   }
 };
 

@@ -34,6 +34,7 @@ async function partition(bars, left, right, board) {
 async function quickMain(bars, left, right, board) {
   if (left >= right) return;
   let partitionIndex = await partition(bars, left, right, board);
+  if(!board.run) return;
   await quickMain(bars, left, partitionIndex - 1, board);
   await quickMain(bars, partitionIndex+1, right, board);
 }
@@ -41,6 +42,7 @@ async function quickMain(bars, left, right, board) {
 async function quickSort(board, callback) {
   let bars = board.boardBars;
   await quickMain(bars, 0, bars.length - 1, board);
+  if(!board.run) return;
   callback(board);
 }
 

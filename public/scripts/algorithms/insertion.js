@@ -13,6 +13,7 @@ async function insertionSort(board, callback) {
   for(let i = 1; i<bars.length; i++) {
     let currentBar = bars[i];
     let j = i - 1;
+    if(!board.run) return;
     drawBarByState(bars[i], STATE.ACTIVE);
     while(j >= 0 && bars[j].height > currentBar.height) {
       drawBarByState(bars[j], STATE.CURRENT);

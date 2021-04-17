@@ -12,6 +12,7 @@ async function selectionSort(board, callback) {
   let bars = board.boardBars;
   for(let i = 0; i<bars.length; i++) {
     let smallestBar = bars[i];
+    if(!board.run) return;
     drawBarByState(bars[i], STATE.ACTIVE);
     for(let j = i+1; j<bars.length; j++) {
       drawBarByState(bars[j], STATE.CURRENT);

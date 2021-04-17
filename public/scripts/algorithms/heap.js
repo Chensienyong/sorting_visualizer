@@ -20,6 +20,7 @@ async function heapify(board, n, i) {
   if (r < n && bars[r].height > bars[largest].height)
     largest = r;
 
+  if(!board.run) return;
   if (largest != i) {
     drawBarByState(bars[largest], STATE.ACTIVE);
     drawBarByState(bars[i], STATE.COMPARED);
@@ -46,6 +47,7 @@ async function heapSort(board, callback) {
     drawBarByState(bars[0], STATE.NOT_ACTIVE);
     await heapify(board, i, 0);
   }
+  if(!board.run) return;
   callback(board);
 }
 

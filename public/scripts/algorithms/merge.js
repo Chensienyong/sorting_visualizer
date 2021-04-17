@@ -69,12 +69,14 @@ async function mergeMain(bars, left, right, board) {
   let mid = Math.floor(left + ((right - left) / 2));
   await mergeMain(bars, left, mid, board);
   await mergeMain(bars, mid+1, right, board);
+  if(!board.run) return;
   await merge(bars, left, mid, right, board);
 }
 
 async function mergeSort(board, callback) {
   let bars = board.boardBars;
   await mergeMain(bars, 0, bars.length - 1, board);
+  if(!board.run) return;
   callback(board);
 }
 
