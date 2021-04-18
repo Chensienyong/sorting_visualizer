@@ -6,16 +6,26 @@ const mergeSort = require("./algorithms/merge");
 const quickSort = require("./algorithms/quick");
 const heapSort = require("./algorithms/heap");
 
-function Board(width, height, totalBars, minHeight) {
+const ARRAY_SIZE = {
+  'smallest': 25,
+  'small': 75,
+  'normal': 100,
+  'large': 1000,
+  'largest': 10000,
+};
+Object.freeze(ARRAY_SIZE)
+
+function Board(width, height, totalBars) {
   this.width = width;
   this.height = height;
   this.boardBars = [];
   this.bars = {};
   this.speed = "fast";
   this.totalBars = totalBars;
-  this.minHeight = minHeight;
-  this.algorithm = "bubble";
+  this.minHeight = 5;
+  this.algorithm = "heap";
   this.run = false;
+  this.arraySize = "normal";
 };
 
 Board.prototype.init = function() {
@@ -117,16 +127,12 @@ Board.prototype.toggleButtons = function() {
 
   document.getElementById("startButton").onclick = () => {
     if (this.run) {
-      this.run = false;
-
-      document.getElementById("randomizeButton").removeAttribute("disabled", "");
-      document.getElementById("algorithm").className = "nav-link dropdown-toggle";
-      document.getElementById("startButton").innerHTML = "Start";
+      stop(this);
     } else {
       this.run = true;
 
       document.getElementById("randomizeButton").setAttribute("disabled", "");
-      document.getElementById("algorithm").className = "nav-link dropdown-toggle disabled";
+      document.getElementById("algorithm").className = "btn btn-dark btn-lg dropdown-toggle disabled";
       document.getElementById("startButton").innerHTML = "Stop";
 
       this.unactivate();
@@ -158,6 +164,14 @@ Board.prototype.runSorting = function() {
   }
 };
 
+function stop(board) {
+  board.run = false;
+
+  document.getElementById("randomizeButton").removeAttribute("disabled", "");
+  document.getElementById("algorithm").className = "btn btn-dark btn-lg dropdown-toggle";
+  document.getElementById("startButton").innerHTML = "Start";
+}
+
 function finishSorting(board) {
   let listBars = [];
   for(let i = board.boardBars.length-1; i >= 0; i--) {
@@ -165,7 +179,10 @@ function finishSorting(board) {
   }
 
   function generation() {
-    if(listBars.length == 0) return;
+    if(listBars.length == 0) {
+      stop(board);
+      return;
+    }
     let speed = board.speed === "fast" ?
       0 : board.speed === "average" ?
         10 : 20;
@@ -212,10 +229,9 @@ function shuffle(array) {
   return array;
 }
 
-let minHeight = 5;
 let maxBars = 100; //to make sort not taking too long
 let totalBars = Math.min(maxBars, $("#array").width() / 2); //2 is margin 0.5 both right and left + 1px bar
 let width = ($("#array").width() / totalBars) - 1; //1 is margin 0.5 both right and left
 let height = $("#array").height();
-let newBoard = new Board(width, height, totalBars, minHeight);
+let newBoard = new Board(width, height, totalBars);
 newBoard.init();

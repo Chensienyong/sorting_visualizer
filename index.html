@@ -17,19 +17,6 @@
           <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="algorithm" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Algorithm: Bubble Sort
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
-                  <li id='bubble'><a class="dropdown-item" href="#">Bubble Sort</a></li>
-                  <li id='heap'><a class="dropdown-item" href="#">Heap Sort</a></li>
-                  <li id='insertion'><a class="dropdown-item" href="#">Insertion Sort</a></li>
-                  <li id='merge'><a class="dropdown-item" href="#">Merge Sort</a></li>
-                  <li id='quick'><a class="dropdown-item" href="#">Quick Sort</a></li>
-                  <li id='selection'><a class="dropdown-item" href="#">Selection Sort</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="adjustSpeed" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Speed: Fast
                 <span class="caret"></span></a>
@@ -46,13 +33,42 @@
     </div>
     <div id="buttonDiv">
       <nav class="navbar navbar-expand-lg navbar-dark navbar-menu">
-        <div class="d-grid col-8 mx-auto">
+        <div class="d-grid col-12 mx-auto">
           <div class="row">
-            <div class="col-sm-6 col-xm-6 d-flex justify-content-center button-container">
-              <button id="randomizeButton" type="button" class="btn btn-light">Randomize</button>
+            <div class="col-md-3 col-sm-6 col-6 d-flex justify-content-end button-container">
+              <div class="btn-group">
+                <button class="btn btn-dark btn-lg dropdown-toggle" id="arraySize" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Array Size: Normal
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
+                  <li id='smallestArray'><a class="dropdown-item" href="#">Smallest</a></li>
+                  <li id='smallArray'><a class="dropdown-item" href="#">Small</a></li>
+                  <li id='normalArray'><a class="dropdown-item" href="#">Normal</a></li>
+                  <li id='largeArray'><a class="dropdown-item" href="#">Large</a></li>
+                  <li id='largestArray'><a class="dropdown-item" href="#">Largest</a></li>
+                </ul>
+              </div>
             </div>
-            <div class="col-sm-6 col-xm-6 d-flex justify-content-center button-container">
-              <button id="startButton" type="button" class="btn btn-light">Start</button>
+            <div class="col-md-3 col-sm-6 col-6 d-flex justify-content-start button-container">
+              <button id="randomizeButton" type="button" class="btn btn-light colorized-button">Randomize</button>
+            </div>
+            <div class="col-md-3 col-sm-6 col-6 d-flex justify-content-end button-container">
+              <div class="btn-group">
+                <button class="btn btn-dark btn-lg dropdown-toggle" id="algorithm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Algorithm: Heap Sort
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarScrollingDropdown">
+                  <li id='bubble'><a class="dropdown-item" href="#">Bubble Sort</a></li>
+                  <li id='heap'><a class="dropdown-item" href="#">Heap Sort</a></li>
+                  <li id='insertion'><a class="dropdown-item" href="#">Insertion Sort</a></li>
+                  <li id='merge'><a class="dropdown-item" href="#">Merge Sort</a></li>
+                  <li id='quick'><a class="dropdown-item" href="#">Quick Sort</a></li>
+                  <li id='selection'><a class="dropdown-item" href="#">Selection Sort</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-6 d-flex justify-content-start button-container">
+              <button id="startButton" type="button" class="btn btn-light colorized-button">Start</button>
             </div>
           </div>
         </div>
