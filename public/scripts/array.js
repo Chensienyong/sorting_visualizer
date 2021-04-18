@@ -229,7 +229,7 @@ function shuffle(array) {
   return array;
 }
 
-let maxBars = 100; //to make sort not taking too long
+let maxBars = 25; //to make sort not taking too long
 let totalBars = Math.min(maxBars, $("#array").width() / 2); //2 is margin 0.5 both right and left + 1px bar
 let width = ($("#array").width() / totalBars) - 1; //1 is margin 0.5 both right and left
 let height = $("#array").height();

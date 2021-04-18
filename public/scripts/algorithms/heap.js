@@ -35,7 +35,7 @@ async function heapify(board, n, i) {
 async function heapSort(board, callback) {
   let bars = board.boardBars;
   let n = bars.length;
-  for (let i = n / 2 -1; i >= 0; i--)
+  for (let i = Math.floor(n / 2) -1; i >= 0; i--)
     await heapify(board, n, i);
 
   for (let i = n - 1; i > 0; i--) {
