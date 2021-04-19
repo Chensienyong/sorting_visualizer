@@ -15,13 +15,13 @@ const ARRAY_SIZE = {
 };
 Object.freeze(ARRAY_SIZE)
 
-function Board(width, height, totalBars) {
-  this.width = width;
+function Board(height) {
+  this.width = 50;
   this.height = height;
   this.boardBars = [];
   this.bars = {};
   this.speed = "fast";
-  this.totalBars = totalBars;
+  this.totalBars = 100;
   this.minHeight = 5;
   this.algorithm = "heap";
   this.run = false;
@@ -29,6 +29,7 @@ function Board(width, height, totalBars) {
 };
 
 Board.prototype.init = function() {
+  this.changeSize();
   this.createBoard();
   this.draw();
   this.toggleButtons();
@@ -133,6 +134,7 @@ Board.prototype.toggleButtons = function() {
 
       document.getElementById("randomizeButton").setAttribute("disabled", "");
       document.getElementById("algorithm").className = "btn btn-dark btn-lg dropdown-toggle disabled";
+      document.getElementById("arraySize").className = "btn btn-dark btn-lg dropdown-toggle disabled";
       document.getElementById("startButton").innerHTML = "Stop";
 
       this.unactivate();
@@ -164,11 +166,25 @@ Board.prototype.runSorting = function() {
   }
 };
 
+Board.prototype.changeSize = function() {
+  let maxBars = getMaxBars(this.arraySize);
+  let width = $("#array").width();
+  let maxWidth = width / 2; //2 is margin 0.5 both right and left + 1px bar
+
+  this.totalBars = Math.min(maxBars, maxWidth);
+  this.width = (width / this.totalBars) - 1; //1 is margin 0.5 both right and left
+};
+
+function getMaxBars(arraySize) {
+  return ARRAY_SIZE[arraySize];
+};
+
 function stop(board) {
   board.run = false;
 
   document.getElementById("randomizeButton").removeAttribute("disabled", "");
   document.getElementById("algorithm").className = "btn btn-dark btn-lg dropdown-toggle";
+  document.getElementById("arraySize").className = "btn btn-dark btn-lg dropdown-toggle";
   document.getElementById("startButton").innerHTML = "Start";
 }
 
@@ -229,9 +245,6 @@ function shuffle(array) {
   return array;
 }
 
-let maxBars = 25; //to make sort not taking too long
-let totalBars = Math.min(maxBars, $("#array").width() / 2); //2 is margin 0.5 both right and left + 1px bar
-let width = ($("#array").width() / totalBars) - 1; //1 is margin 0.5 both right and left
 let height = $("#array").height();
-let newBoard = new Board(width, height, totalBars);
+let newBoard = new Board(height);
 newBoard.init();
