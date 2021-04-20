@@ -29,10 +29,16 @@ function Board(height) {
 };
 
 Board.prototype.init = function() {
+  this.changeBoard();
+  this.toggleButtons();
+};
+
+Board.prototype.changeBoard = function() {
+  this.boardBars = [];
+  this.bars = {};
   this.changeSize();
   this.createBoard();
   this.draw();
-  this.toggleButtons();
 };
 
 Board.prototype.createBoard = function() {
@@ -79,17 +85,17 @@ Board.prototype.unactivate = function() {
 Board.prototype.toggleButtons = function() {
   document.getElementById("adjustFast").onclick = () => {
     this.speed = "fast";
-    document.getElementById("adjustSpeed").innerHTML = 'Speed: Fast<span class="caret"></span>';
+    document.getElementById("adjustSpeed").innerHTML = 'Speed: Fast\n';
   }
 
   document.getElementById("adjustAverage").onclick = () => {
     this.speed = "average";
-    document.getElementById("adjustSpeed").innerHTML = 'Speed: Average<span class="caret"></span>';
+    document.getElementById("adjustSpeed").innerHTML = 'Speed: Average\n';
   }
 
   document.getElementById("adjustSlow").onclick = () => {
     this.speed = "slow";
-    document.getElementById("adjustSpeed").innerHTML = 'Speed: Slow<span class="caret"></span>';
+    document.getElementById("adjustSpeed").innerHTML = 'Speed: Slow\n';
   }
 
   document.getElementById("randomizeButton").onclick = () => {
@@ -98,32 +104,62 @@ Board.prototype.toggleButtons = function() {
 
   document.getElementById("bubble").onclick = () => {
     this.algorithm = "bubble";
-    document.getElementById("algorithm").innerHTML = 'Algorithm: Bubble Sort<span class="caret"></span>';
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Bubble Sort\n';
   }
 
   document.getElementById("heap").onclick = () => {
     this.algorithm = "heap";
-    document.getElementById("algorithm").innerHTML = 'Algorithm: Heap Sort<span class="caret"></span>';
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Heap Sort\n';
   }
 
   document.getElementById("insertion").onclick = () => {
     this.algorithm = "insertion";
-    document.getElementById("algorithm").innerHTML = 'Algorithm: Insertion Sort<span class="caret"></span>';
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Insertion Sort\n';
   }
 
   document.getElementById("merge").onclick = () => {
     this.algorithm = "merge";
-    document.getElementById("algorithm").innerHTML = 'Algorithm: Merge Sort<span class="caret"></span>';
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Merge Sort\n';
   }
 
   document.getElementById("quick").onclick = () => {
     this.algorithm = "quick";
-    document.getElementById("algorithm").innerHTML = 'Algorithm: Quick Sort<span class="caret"></span>';
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Quick Sort\n';
   }
 
   document.getElementById("selection").onclick = () => {
     this.algorithm = "selection";
-    document.getElementById("algorithm").innerHTML = 'Algorithm: Selection Sort<span class="caret"></span>';
+    document.getElementById("algorithm").innerHTML = 'Algorithm: Selection Sort\n';
+  }
+
+  document.getElementById("smallestArray").onclick = () => {
+    this.arraySize = "smallest";
+    document.getElementById("arraySize").innerHTML = 'Array Size: Smallest\n';
+    this.changeBoard();
+  }
+
+  document.getElementById("smallArray").onclick = () => {
+    this.arraySize = "small";
+    document.getElementById("arraySize").innerHTML = 'Array Size: Small\n';
+    this.changeBoard();
+  }
+
+  document.getElementById("normalArray").onclick = () => {
+    this.arraySize = "normal";
+    document.getElementById("arraySize").innerHTML = 'Array Size: Normal\n';
+    this.changeBoard();
+  }
+
+  document.getElementById("largeArray").onclick = () => {
+    this.arraySize = "large";
+    document.getElementById("arraySize").innerHTML = 'Array Size: Large\n';
+    this.changeBoard();
+  }
+
+  document.getElementById("largestArray").onclick = () => {
+    this.arraySize = "largest";
+    document.getElementById("arraySize").innerHTML = 'Array Size: Largest\n';
+    this.changeBoard();
   }
 
   document.getElementById("startButton").onclick = () => {
@@ -189,6 +225,7 @@ function stop(board) {
 }
 
 function finishSorting(board) {
+  document.getElementById("startButton").setAttribute("disabled", "");
   let listBars = [];
   for(let i = board.boardBars.length-1; i >= 0; i--) {
     listBars.push(board.boardBars[i].id);
@@ -197,6 +234,7 @@ function finishSorting(board) {
   function generation() {
     if(listBars.length == 0) {
       stop(board);
+      document.getElementById("startButton").removeAttribute("disabled", "");
       return;
     }
     let speed = board.speed === "fast" ?
