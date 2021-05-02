@@ -14,13 +14,20 @@ async function heapify(board, n, i) {
   let r = 2 * i + 2;
   let bars = board.boardBars;
 
-  if (l < n && bars[l].height > bars[largest].height)
+  board.updateArrayAccesses();
+  board.updateComparisons();
+  if (l < n && bars[l].height > bars[largest].height) {
     largest = l;
+  }
 
-  if (r < n && bars[r].height > bars[largest].height)
+  board.updateArrayAccesses();
+  board.updateComparisons();
+  if (r < n && bars[r].height > bars[largest].height) {
     largest = r;
+  }
 
   if(!board.run) return;
+  board.updateArrayAccesses();
   if (largest != i) {
     drawBarByState(bars[largest], STATE.ACTIVE);
     drawBarByState(bars[i], STATE.COMPARED);
@@ -41,6 +48,7 @@ async function heapSort(board, callback) {
   for (let i = n - 1; i > 0; i--) {
     drawBarByState(bars[i], STATE.ACTIVE);
     drawBarByState(bars[0], STATE.COMPARED);
+    board.updateArrayAccesses();
     swapHeight(bars[0], bars[i], board.height);
     await sleep(board.speed);
     drawBarByState(bars[i], STATE.NOT_ACTIVE);

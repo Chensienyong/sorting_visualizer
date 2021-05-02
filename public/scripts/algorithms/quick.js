@@ -10,11 +10,14 @@ Object.freeze(STATE)
 
 async function partition(bars, left, right, board) {
   let index = getRandomPivot(left, right);
+  board.updateArrayAccesses();
   swapHeight(bars[index], bars[right], board.height);
   drawBarByState(bars[right], STATE.ACTIVE);
   let pivot = bars[right].height;
 
   for (let curr = left; curr < right; curr++) {
+    board.updateArrayAccesses();
+    board.updateComparisons();
     if (bars[curr].height < pivot) {
       drawBarByState(bars[curr], STATE.COMPARED);
       drawBarByState(bars[left], STATE.COMPARED);
@@ -26,6 +29,7 @@ async function partition(bars, left, right, board) {
     }
   }
   await sleep(board.speed);
+  board.updateArrayAccesses();
   swapHeight(bars[left], bars[right], board.height);
   drawBarByState(bars[right], STATE.NOT_ACTIVE);
   return left++;

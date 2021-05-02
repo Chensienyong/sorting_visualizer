@@ -11,12 +11,15 @@ Object.freeze(STATE)
 async function selectionSort(board, callback) {
   let bars = board.boardBars;
   for(let i = 0; i<bars.length; i++) {
+    board.updateArrayAccesses();
     let smallestBar = bars[i];
     if(!board.run) return;
     drawBarByState(bars[i], STATE.ACTIVE);
     for(let j = i+1; j<bars.length; j++) {
+      board.updateArrayAccesses();
       drawBarByState(bars[j], STATE.CURRENT);
       await sleep(board.speed);
+      board.updateComparisons();
       if(smallestBar.height > bars[j].height) {
         if(smallestBar.id != bars[i].id) {
           drawBarByState(smallestBar, STATE.NOT_ACTIVE);
@@ -28,6 +31,7 @@ async function selectionSort(board, callback) {
       }
     }
     if(smallestBar.id != bars[i].id) {
+      board.updateArrayAccesses();
       swapHeight(smallestBar, bars[i], board.height);
       drawBarByState(smallestBar, STATE.NOT_ACTIVE);
     }

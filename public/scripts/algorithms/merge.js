@@ -14,11 +14,13 @@ async function merge(bars, left, mid, right, board) {
   let barsLeft = [], barsRight = [];
   for (let i = 0; i < n1; i++) {
     drawBarByState(bars[left + i], STATE.ACTIVE);
+    board.updateArrayAccesses();
     barsLeft.push(bars[left + i].height);
     drawBarByState(bars[left + i], STATE.NOT_ACTIVE);
   }
   for (let i = 0; i < n2; i++) {
     drawBarByState(bars[mid + 1 + i], STATE.ACTIVE);
+    board.updateArrayAccesses();
     barsRight.push(bars[mid + 1 + i].height);
     drawBarByState(bars[mid + 1 + i], STATE.NOT_ACTIVE);
   }
@@ -30,6 +32,8 @@ async function merge(bars, left, mid, right, board) {
     drawBarByState(bars[pointerLeft + left], STATE.COMPARED);
     drawBarByState(bars[mid + 1 + pointerRight], STATE.COMPARED);
     await sleep(board.speed);
+    board.updateComparisons();
+    board.updateArrayAccesses();
     if (barsLeft[pointerLeft] <= barsRight[pointerRight]) {
       setHeight(bars[pointerNow], barsLeft[pointerLeft], board.height);
       drawBarByState(bars[pointerLeft + left], STATE.NOT_ACTIVE);
@@ -46,6 +50,7 @@ async function merge(bars, left, mid, right, board) {
   }
 
   while (pointerLeft < n1) {
+    board.updateArrayAccesses();
     drawBarByState(bars[pointerNow], STATE.ACTIVE);
     setHeight(bars[pointerNow], barsLeft[pointerLeft], board.height);
     await sleep(board.speed);
@@ -55,6 +60,7 @@ async function merge(bars, left, mid, right, board) {
   }
 
   while (pointerRight < n2) {
+    board.updateArrayAccesses();
     drawBarByState(bars[pointerNow], STATE.ACTIVE);
     setHeight(bars[pointerNow], barsRight[pointerRight], board.height);
     await sleep(board.speed);

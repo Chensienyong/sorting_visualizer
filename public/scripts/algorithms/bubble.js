@@ -12,11 +12,14 @@ async function bubbleSort(board, callback) {
   let bars = board.boardBars;
   for(let i = 0; i<bars.length-1; i++) {
     let swapped = false;
+    board.updateArrayAccesses();
     for(let j = 0; j<bars.length-1-i; j++) {
       if(!board.run) return;
+      board.updateArrayAccesses();
       drawBarByState(bars[j], STATE.ACTIVE);
       drawBarByState(bars[j+1], STATE.COMPARED);
       await sleep(board.speed);
+      board.updateComparisons();
       if(bars[j].height > bars[j+1].height) {
         swapped = true;
         swapHeight(bars[j], bars[j+1], board.height);

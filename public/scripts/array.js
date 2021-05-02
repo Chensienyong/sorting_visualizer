@@ -26,6 +26,8 @@ function Board(height) {
   this.algorithm = "heap";
   this.run = false;
   this.arraySize = "normal";
+  this.comparisons = 0;
+  this.arrayAccesses = 0;
 };
 
 Board.prototype.init = function() {
@@ -42,7 +44,7 @@ Board.prototype.changeBoard = function() {
 };
 
 Board.prototype.createBoard = function() {
-  let tableHTML = `<div class="row">`;
+  let tableHTML = `<div class="bars">`;
   let heights = heightArray(this.minHeight, this.height, this.totalBars);
   for (let c = 0; c < this.totalBars; c++) {
     let newBarId = `${c}`;
@@ -167,6 +169,8 @@ Board.prototype.toggleButtons = function() {
       stop(this);
     } else {
       this.run = true;
+      this.comparisons = 0;
+      this.arrayAccesses = 0;
 
       document.getElementById("randomizeButton").setAttribute("disabled", "");
       document.getElementById("algorithm").className = "btn btn-dark btn-lg dropdown-toggle disabled";
@@ -207,8 +211,28 @@ Board.prototype.changeSize = function() {
   let width = $("#array").width();
   let maxWidth = width / 2; //2 is margin 0.5 both right and left + 1px bar
 
-  this.totalBars = Math.min(maxBars, maxWidth);
+  this.totalBars = Math.min(maxBars, maxWidth) - 1; // -1 to fix edge cases of too big
   this.width = (width / this.totalBars) - 1; //1 is margin 0.5 both right and left
+};
+
+Board.prototype.changeComparisons = function() {
+  let comparisons = document.getElementById("comparisons");
+  comparisons.innerHTML = this.comparisons;
+};
+
+Board.prototype.updateComparisons = function() {
+  this.comparisons += 1;
+  this.changeComparisons();
+};
+
+Board.prototype.changeArrayAccesses = function() {
+  let arrayAccesses = document.getElementById("arrayAccesses");
+  arrayAccesses.innerHTML = this.arrayAccesses;
+};
+
+Board.prototype.updateArrayAccesses = function() {
+  this.arrayAccesses += 1;
+  this.changeArrayAccesses();
 };
 
 function getMaxBars(arraySize) {
@@ -264,7 +288,6 @@ function heightArray(minHeight, maxHeight, size) {
 }
 
 function shuffle(array) {
-
   let counter = array.length;
   // While there are elements in the array
   while (counter > 0) {

@@ -11,11 +11,14 @@ Object.freeze(STATE)
 async function insertionSort(board, callback) {
   let bars = board.boardBars;
   for(let i = 1; i<bars.length; i++) {
+    board.updateArrayAccesses();
     let currentBar = bars[i];
     let j = i - 1;
     if(!board.run) return;
     drawBarByState(bars[i], STATE.ACTIVE);
     while(j >= 0 && bars[j].height > currentBar.height) {
+      board.updateArrayAccesses();
+      board.updateComparisons();
       drawBarByState(bars[j], STATE.CURRENT);
       swapHeight(bars[j], currentBar, board.height);
       currentBar = bars[j];

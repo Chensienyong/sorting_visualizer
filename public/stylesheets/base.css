@@ -28,6 +28,13 @@ body {
   margin-top: 20px;
 }
 
+#details {
+  width: 90vw;
+  margin: auto;
+  margin-top: 10px;
+  color: #141414;
+}
+
 #array {
   height: 100%;
 }
@@ -93,4 +100,9 @@ button:disabled {
 
 .current {
   background-color: #007980;
+}
+
+.bars {
+  display: flex;
+  flex-wrap: wrap;
 }
